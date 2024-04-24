@@ -1,0 +1,10 @@
+{% if users %}
+    <ul>
+        {% for user in tasks %}
+            <li>{{ user.id }} - {{ user.username }} - {{ user.email }} - 
+                {{ user.first_name }} - {{ user.last_name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No users are available.</p>
+{% endif %}
