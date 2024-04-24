@@ -1,6 +1,4 @@
-
 # Create your views here.
-
 from django.http import JsonResponse
 from django.core.serializers import serialize
 
