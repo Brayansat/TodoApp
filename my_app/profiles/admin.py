@@ -4,4 +4,12 @@ from .models import Profile
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        "id",
+        "first_name",
+        "last_name", 
+        "username", 
+        "email", 
+        "is_superuser",
+    ]
+    search_fields = ["username"]
