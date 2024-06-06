@@ -17,8 +17,18 @@ Including another URLconf
 #urls
 from django.contrib import admin
 from django.urls import path, include
+from tasks.views import TaskviewSet, CustomAuthToken
+from rest_framework import routers
+from rest_framework.authtoken import views
+
+router = routers.DefaultRouter()
+router.register(r'tasks', TaskviewSet)
 
 urlpatterns = [
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/token/', views.obtain_auth_token),
+    path('api-token-auth/', CustomAuthToken.as_view()),
     path('admin/', admin.site.urls),
-    path('tasks/', include('tasks.urls'))
+
 ]
