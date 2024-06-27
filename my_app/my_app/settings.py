@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_filters',
     "tasks.apps.TasksConfig",
     "profiles.apps.ProfilesConfig",
+    'corsheaders'
 
 ]
 
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'my_app.urls'
@@ -143,3 +145,8 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'profiles.Profile'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Ejemplo: permitir solicitudes desde React en localhost
+    "https://tufrontend.com",  # Agrega aquí tu dominio de frontend en producción
+]
