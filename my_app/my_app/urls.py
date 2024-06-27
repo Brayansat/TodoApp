@@ -17,18 +17,20 @@ Including another URLconf
 #urls
 from django.contrib import admin
 from django.urls import path, include
-from tasks.views import TaskviewSet, CustomAuthToken
+from tasks.views import TaskViewSet
 from rest_framework import routers
-from rest_framework.authtoken import views
+from profiles.views import ProfileCreationView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = routers.DefaultRouter()
-router.register(r'tasks', TaskviewSet)
+router.register(r'tasks', TaskViewSet)
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('api/', include(router.urls), name="tasks"),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api/token/', views.obtain_auth_token),
-    path('api-token-auth/', CustomAuthToken.as_view()),
-    path('admin/', admin.site.urls),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("admin/", admin.site.urls),
+    path("api/profiles/", ProfileCreationView.as_view(), name="profiles"),
 
 ]
