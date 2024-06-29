@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from decouple import config
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -135,7 +136,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
@@ -146,7 +147,11 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'profiles.Profile'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Ejemplo: permitir solicitudes desde React en localhost
-    "https://tufrontend.com",  # Agrega aquí tu dominio de frontend en producción
-]
+CORS_ALLOW_ALL_ORIGINS = True
+
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'id',  # Campo del usuario utilizado como 'user_id' en el token
+    'USERNAME_FIELD': 'username',  # Campo del usuario utilizado como 'username' en el token
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Tiempo de vida del token de acceso
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # Tiempo de vida del token de actualización
+}

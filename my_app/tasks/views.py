@@ -4,6 +4,9 @@ from rest_framework import viewsets
 from .serializers import TaskSerializer, TaskListSerializer, TaskUpdateSerializer
 from .filters import TaskFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class TaskViewSet(viewsets.ModelViewSet):
@@ -25,3 +28,10 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     def perform_destroy(self, instance):
         instance.delete()
+    
+    @action(detail=True, methods=['patch'], url_path='complete')
+    def complete_task(self, request, pk=None):
+        task = self.get_object()
+        task.completed = True
+        task.save()
+        return Response({'status': 'task completed'}, status=status.HTTP_200_OK)
